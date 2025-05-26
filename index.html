@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovative Store - Rama Arif Ichsani</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: #667eea;
+        }
+
+        .service-card.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .order-form {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .selected-services {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .selected-services h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .service-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .whatsapp-info {
+            background: rgba(37, 211, 102, 0.1);
+            border: 2px solid #25d366;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .whatsapp-info h4 {
+            color: #25d366;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .whatsapp-info p {
+            color: #333;
+            font-size: 1rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .service-card,
+            .order-form {
+                padding: 25px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .7;
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translate(0, 0px);
+            }
+            50% {
+                transform: translate(0, -10px);
+            }
+            100% {
+                transform: translate(0, -0px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="floating">🚀 Innovative Store</h1>
+            <p>Solusi Terpercaya untuk Kebutuhan Tugas Anda</p>
+            <p style="font-size: 12px; color: #333;"><i>Beta Version: 2.0.25</i></p>
+        </div>
+
+        <div class="services-grid" id="servicesGrid">
+            <div class="service-card" data-service="Cek Plagiarisme">
+                <div class="service-icon">🔍</div>
+                <h3>Cek Plagiarisme</h3>
+                <p>Pengecekan plagiarisme menggunakan tools terpercaya untuk memastikan originalitas karya Anda</p>
+            </div>
+            
+            <div class="service-card" data-service="Parafrase">
+                <div class="service-icon">✍️</div>
+                <h3>Parafrase</h3>
+                <p>Mengubah struktur kalimat dan pemilihan kata tanpa mengubah makna asli dari teks</p>
+            </div>
+            
+            <div class="service-card" data-service="Skripsi">
+                <div class="service-icon">📚</div>
+                <h3>Skripsi</h3>
+                <p>Bantuan penyelesaian skripsi dengan metodologi yang tepat dan referensi yang akurat</p>
+            </div>
+            
+            <div class="service-card" data-service="Jurnal">
+                <div class="service-icon">📄</div>
+                <h3>Jurnal</h3>
+                <p>Penulisan jurnal ilmiah dengan standar publikasi yang sesuai dengan bidang studi</p>
+            </div>
+            
+            <div class="service-card" data-service="Makalah">
+                <div class="service-icon">📝</div>
+                <h3>Makalah</h3>
+                <p>Pembuatan makalah akademik dengan struktur yang sistematis dan referensi lengkap</p>
+            </div>
+            
+            <div class="service-card" data-service="Website Statis">
+                <div class="service-icon">🌐</div>
+                <h3>Website Statis</h3>
+                <p>Pembuatan website statis dengan HTML, CSS, dan JavaScript untuk kebutuhan personal atau bisnis</p>
+            </div>
+            
+            <div class="service-card" data-service="Website Dinamis">
+                <div class="service-icon">⚡</div>
+                <h3>Website Dinamis</h3>
+                <p>Pengembangan website dinamis dengan database dan fitur interaktif yang kompleks</p>
+            </div>
+            
+            <div class="service-card" data-service="Web Lainnya">
+                <div class="service-icon">🔧</div>
+                <h3>Web Lainnya</h3>
+                <p>Pengembangan aplikasi web khusus sesuai dengan kebutuhan dan spesifikasi yang diinginkan</p>
+            </div>
+            
+            <div class="service-card" data-service="Desain Grafis">
+                <div class="service-icon">🎨</div>
+                <h3>Desain Grafis</h3>
+                <p>Pembuatan desain grafis profesional untuk logo, poster, banner, brosur, dan kebutuhan visual lainnya</p>
+            </div>
+            
+            <div class="service-card" data-service="Undangan Online">
+                <div class="service-icon">💍​</div>
+                <h3>Undangan Online</h3>
+                <p>Pembuatan undangan digital interaktif untuk pernikahan, ulang tahun, acara khusus dengan fitur RSVP</p>
+            </div>
+            
+            <div class="service-card" data-service="3D">
+                <div class="service-icon">🤖​</div>
+                <h3>3D Modeling & Rendering</h3>
+                <p>Pembuatan model 3D, animasi, rendering, dan visualisasi untuk presentasi, game, atau kebutuhan profesional</p>
+            </div>
+        </div>
+
+        <div class="order-form">
+            <h2 style="margin-bottom: 30px; color: #333; text-align: center; font-size: 2rem;">📋 Form Pemesanan</h2>
+            
+            <div class="selected-services" id="selectedServices" style="display: none;">
+                <h3>🎯 Layanan yang Dipilih:</h3>
+                <div id="selectedServicesList"></div>
+            </div>
+
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="serviceSelect">🎯 Pilih Layanan</label>
+                    <select id="serviceSelect" name="serviceSelect" required>
+                        <option value="">-- Pilih Layanan yang Dibutuhkan --</option>
+                        <option value="Cek Plagiarisme">🔍 Cek Plagiarisme</option>
+                        <option value="Parafrase">✍️ Parafrase</option>
+                        <option value="Skripsi">📚 Skripsi</option>
+                        <option value="Jurnal">📄 Jurnal</option>
+                        <option value="Makalah">📝 Makalah</option>
+                        <option value="Website Statis">🌐 Website Statis</option>
+                        <option value="Website Dinamis">⚡ Website Dinamis</option>
+                        <option value="Web Lainnya">🔧 Web Lainnya</option>
+                        <option value="Desain Grafis">🎨 Desain Grafis</option>
+                        <option value="Undangan Online">💌 Undangan Online</option>
+                        <option value="3D">🗿 3D Modeling & Rendering</option>
+                        <option value="Multiple Services">🎯 Lebih dari 1 Layanan (Pilih di atas)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerName">👤 Nama Lengkap</label>
+                    <input type="text" id="customerName" name="customerName" required placeholder="Masukkan nama lengkap Anda">
+                </div>
+
+                <div class="form-group">
+                    <label for="customerPhone">📱 Nomor WhatsApp</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" required placeholder="Contoh: 081234567890">
+                </div>
+
+                <div class="form-group">
+                    <label for="customerEmail">📧 Email</label>
+                    <input type="email" id="customerEmail" name="customerEmail" required placeholder="Contoh: nama@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="deadline">⏰ Deadline</label>
+                    <input type="datetime-local" id="deadline" name="deadline" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="budget">💰 Budget (Opsional)</label>
+                    <input type="text" id="budget" name="budget" placeholder="Contoh: Rp 500.000 atau Nego">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">📝 Deskripsi Detail Pekerjaan</label>
+                    <textarea id="description" name="description" required placeholder="Jelaskan secara detail apa yang Anda butuhkan, termasuk spesifikasi teknis, fitur yang diinginkan, atau referensi yang ada..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalInfo">ℹ️ Informasi Tambahan</label>
+                    <textarea id="additionalInfo" name="additionalInfo" placeholder="Catatan khusus, preferensi, atau hal lain yang perlu diketahui..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    🚀 Kirim Pesanan ke WhatsApp
+                </button>
+            </form>
+
+            <div class="whatsapp-info">
+                <h4>📲 Pesanan akan dikirim ke:</h4>
+                <p><strong>Rama Arif Ichsani</strong></p>
+                <p>WhatsApp: <strong>081265548034</strong></p>
+                <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                    Pesanan Anda akan langsung terkirim ke WhatsApp untuk respon yang lebih cepat
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let selectedServices = [];
+
+        // Service selection functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceCards = document.querySelectorAll('.service-card');
+            const selectedServicesDiv = document.getElementById('selectedServices');
+            const selectedServicesList = document.getElementById('selectedServicesList');
+            const orderForm = document.getElementById('orderForm');
+
+            // Add click event to service cards
+            serviceCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const serviceName = this.getAttribute('data-service');
+                    
+                    if (this.classList.contains('selected')) {
+                        // Deselect service
+                        this.classList.remove('selected');
+                        selectedServices = selectedServices.filter(service => service !== serviceName);
+                    } else {
+                        // Select service
+                        this.classList.add('selected');
+                        if (!selectedServices.includes(serviceName)) {
+                            selectedServices.push(serviceName);
+                        }
+                    }
+                    
+                    // Update dropdown if multiple services are selected
+                    const serviceSelect = document.getElementById('serviceSelect');
+                    if (selectedServices.length > 1) {
+                        serviceSelect.value = 'Multiple Services';
+                    } else if (selectedServices.length === 1) {
+                        serviceSelect.value = selectedServices[0];
+                    } else {
+                        serviceSelect.value = '';
+                    }
+                    
+                    updateSelectedServices();
+                });
+            });
+
+            // Update selected services display
+            function updateSelectedServices() {
+                if (selectedServices.length > 0) {
+                    selectedServicesDiv.style.display = 'block';
+                    selectedServicesList.innerHTML = selectedServices
+                        .map(service => `<span class="service-tag">${service}</span>`)
+                        .join('');
+                } else {
+                    selectedServicesDiv.style.display = 'none';
+                }
+            }
+
+            // Service select change handler
+            const serviceSelect = document.getElementById('serviceSelect');
+            serviceSelect.addEventListener('change', function() {
+                const selectedValue = this.value;
+                
+                if (selectedValue && selectedValue !== 'Multiple Services') {
+                    // Clear previous selections
+                    selectedServices = [];
+                    serviceCards.forEach(card => card.classList.remove('selected'));
+                    
+                    // Add selected service
+                    selectedServices = [selectedValue];
+                    
+                    // Highlight corresponding card
+                    serviceCards.forEach(card => {
+                        if (card.getAttribute('data-service') === selectedValue) {
+                            card.classList.add('selected');
+                        }
+                    });
+                    
+                    updateSelectedServices();
+                } else if (selectedValue === 'Multiple Services') {
+                    // Show instruction for multiple services
+                    alert('💡 Untuk memilih lebih dari 1 layanan, silakan klik langsung pada card layanan di atas!');
+                }
+            });
+
+            // Form submission
+            orderForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const serviceSelectValue = formData.get('serviceSelect');
+                
+                // Check if service is selected either from dropdown or cards
+                if (selectedServices.length === 0 && !serviceSelectValue) {
+                    alert('⚠️ Mohon pilih minimal satu layanan yang dibutuhkan!');
+                    return;
+                }
+
+                // If only dropdown is selected but no cards, use dropdown value
+                if (selectedServices.length === 0 && serviceSelectValue && serviceSelectValue !== 'Multiple Services') {
+                    selectedServices = [serviceSelectValue];
+                }
+
+                // Get form data
+                const customerName = formData.get('customerName');
+                const customerPhone = formData.get('customerPhone');
+                const customerEmail = formData.get('customerEmail');
+                const deadline = formData.get('deadline');
+                const budget = formData.get('budget');
+                const description = formData.get('description');
+                const additionalInfo = formData.get('additionalInfo');
+
+                // Format deadline
+                const deadlineDate = new Date(deadline);
+                const formattedDeadline = deadlineDate.toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                // Create WhatsApp message
+                let message = `🚀 *PESANAN JOKI CODING BARU* 🚀\n\n`;
+                message += `👤 *Nama:* ${customerName}\n`;
+                message += `📱 *WhatsApp:* ${customerPhone}\n`;
+                message += `📧 *Email:* ${customerEmail}\n\n`;
+                message += `🎯 *Layanan yang Dipesan:*\n`;
+                selectedServices.forEach((service, index) => {
+                    message += `${index + 1}. ${service}\n`;
+                });
+                message += `\n⏰ *Deadline:* ${formattedDeadline}\n`;
+                
+                if (budget) {
+                    message += `💰 *Budget:* ${budget}\n`;
+                }
+                
+                message += `\n📝 *Deskripsi Detail:*\n${description}\n`;
+                
+                if (additionalInfo) {
+                    message += `\nℹ️ *Informasi Tambahan:*\n${additionalInfo}\n`;
+                }
+                
+                message += `\n---\n🤝 Mohon konfirmasi penerimaan pesanan ini.\nTerima kasih! 🙏`;
+
+                // Encode message for URL
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappURL = `https://wa.me/6281265548034?text=${encodedMessage}`;
+
+                // Add loading state
+                const submitBtn = document.querySelector('.btn-submit');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '⏳ Mengirim...';
+                submitBtn.disabled = true;
+
+                // Open WhatsApp after a short delay
+                setTimeout(() => {
+                    window.open(whatsappURL, '_blank');
+                    
+                    // Reset button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Show success message
+                    alert('✅ Pesanan berhasil disiapkan! WhatsApp akan terbuka untuk mengirim pesan.');
+                    
+                    // Optional: Reset form
+                    // orderForm.reset();
+                    // selectedServices = [];
+                    // serviceCards.forEach(card => card.classList.remove('selected'));
+                    // serviceSelect.value = '';
+                    // updateSelectedServices();
+                }, 1000);
+            });
+
+            // Set minimum datetime to current time
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('deadline').min = now.toISOString().slice(0, 16);
+        });
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add pulse animation to submit button on hover
+            const submitBtn = document.querySelector('.btn-submit');
+            submitBtn.addEventListener('mouseenter', function() {
+                this.classList.add('pulse');
+            });
+            submitBtn.addEventListener('mouseleave', function() {
+                this.classList.remove('pulse');
+            });
+
+            // Add floating animation delay to service cards
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
