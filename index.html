@@ -3,500 +3,402 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAM Putra Buana - Sistem Timbangan Buah Sawit</title>
+    <title>Innovative Store - Jasa Kebutuhan Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Menggunakan font Inter */
+        html {
+            scroll-behavior: smooth;
         }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: #1a237e; /* Warna latar belakang biru tua */
+            color: #ffffff;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
+        /* Styling untuk gradasi teks */
+        .text-gradient {
+            background: linear-gradient(90deg, #facc15, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            padding: 30px;
-            text-align: center;
-            color: white;
+        /* Animasi untuk ikon yang mengambang */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
 
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        .floating-icon {
+            animation: float 6s ease-in-out infinite;
         }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+        
+        /* Animasi fade-in saat scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding: 30px;
-        }
-
-        .form-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            border: 2px solid #e9ecef;
-        }
-
-        .form-section h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            width: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-        }
-
-        .btn:active {
+        
+        .reveal.visible {
+            opacity: 1;
             transform: translateY(0);
         }
 
-        .btn-success {
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        /* Menambahkan sedikit bayangan pada ikon untuk efek 3D */
+        .icon-shadow {
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
         }
 
-        .btn-success:hover {
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
-        }
-
-        .result-section {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 25px;
-            border-radius: 15px;
-            border: 2px solid #dee2e6;
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            margin: 10px 0;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-left: 4px solid #3498db;
-        }
-
-        .result-item.total {
-            border-left-color: #e74c3c;
-            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-
-        .history-section {
-            grid-column: 1 / -1;
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            border: 2px solid #e9ecef;
-            margin-top: 20px;
-        }
-
-        .history-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .history-table th {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .history-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .history-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        .status {
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .status.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .status.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .history-table {
-                font-size: 14px;
-            }
-        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🌴 RAM PUTRA BUANA</h1>
-            <p>Sistem Timbangan Buah Sawit Digital</p>
-        </div>
+<body class="antialiased">
 
-        <div class="main-content">
-            <div class="form-section">
-                <h2>📊 Input Data Timbangan</h2>
-                <form id="timbanganForm">
-                    <div class="form-group">
-                        <label for="tanggal">Tanggal:</label>
-                        <input type="date" id="tanggal" name="tanggal" required>
+    <!-- Header / Menu Navigasi -->
+    <header class="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 w-full">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="font-bold text-xl text-white">Innovative <span class="text-gradient">Store</span></a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="text-gray-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#layanan" class="text-gray-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Layanan</a>
+                        <a href="#tim" class="text-gray-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tim Kami</a>
+                        <a href="#galeri" class="text-gray-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Galeri</a>
+                        <a href="#pemesanan" class="text-gray-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Pesan Jasa</a>
+                        <a href="#kontak" class="text-gray-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Kontak</a>
                     </div>
-
-                    <div class="form-group">
-                        <label for="noKendaraan">No. Kendaraan:</label>
-                        <input type="text" id="noKendaraan" name="noKendaraan" placeholder="B 1234 CD" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="namaPetani">Nama Petani:</label>
-                        <input type="text" id="namaPetani" name="namaPetani" placeholder="Nama lengkap petani" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="beratKotor">Berat Kotor (kg):</label>
-                        <input type="number" id="beratKotor" name="beratKotor" step="0.1" placeholder="0" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="beratKendaraan">Berat Kendaraan (kg):</label>
-                        <input type="number" id="beratKendaraan" name="beratKendaraan" step="0.1" placeholder="0" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="hargaPerKg">Harga per Kg (Rp):</label>
-                        <input type="number" id="hargaPerKg" name="hargaPerKg" step="1" placeholder="0" required>
-                    </div>
-
-                    <button type="submit" class="btn">🧮 Hitung Timbangan</button>
-                </form>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <!-- Tombol Hamburger Menu -->
+                    <button id="menu-button" type="button" class="bg-slate-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Buka menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
             </div>
+        </nav>
+        <!-- Menu Mobile -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-gray-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#layanan" class="text-gray-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Layanan</a>
+                <a href="#tim" class="text-gray-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Tim Kami</a>
+                <a href="#galeri" class="text-gray-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Galeri</a>
+                <a href="#pemesanan" class="text-gray-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Pesan Jasa</a>
+                <a href="#kontak" class="text-gray-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
+            </div>
+        </div>
+    </header>
 
-            <div class="result-section">
-                <h2>📋 Hasil Perhitungan</h2>
-                <div id="hasilPerhitungan">
-                    <div class="result-item">
-                        <span>Berat Bersih:</span>
-                        <strong id="beratBersih">0 kg</strong>
-                    </div>
-                    <div class="result-item">
-                        <span>Harga per Kg:</span>
-                        <strong id="displayHarga">Rp 0</strong>
-                    </div>
-                    <div class="result-item total">
-                        <span>Total Pembayaran:</span>
-                        <strong id="totalPembayaran">Rp 0</strong>
+    <!-- Kontainer Utama -->
+    <div id="home" class="min-h-screen flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8 -mt-16">
+        <main class="w-full max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <!-- Kolom Kiri: Konten Teks -->
+                <div class="text-center lg:text-left space-y-6">
+                    <h1 class="text-5xl md:text-7xl font-black tracking-tighter reveal">
+                        Innovative <span class="text-gradient">Store</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-indigo-200 max-w-lg mx-auto lg:mx-0 reveal" style="transition-delay: 150ms;">
+                        Jasa lengkap untuk semua kebutuhan Anda! Website, skripsi, makalah, desain, dan lainnya tersedia di sini.
+                    </p>
+                    <div class="pt-4 reveal" style="transition-delay: 300ms;">
+                        <a href="#pemesanan" class="inline-block bg-yellow-400 text-slate-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            Pesan Sekarang
+                        </a>
                     </div>
                 </div>
 
-                <button type="button" id="simpanData" class="btn btn-success" style="margin-top: 20px;" disabled>
-                    💾 Simpan ke Database
-                </button>
+                <!-- Kolom Kanan: Ilustrasi Animasi -->
+                <div class="relative flex items-center justify-center h-96 lg:h-full reveal" style="transition-delay: 450ms;">
+                    <!-- Base Ilustrasi (Editor) -->
+                    <div class="w-full max-w-md h-auto bg-slate-800/50 rounded-2xl shadow-2xl p-4 border border-slate-700 relative overflow-hidden">
+                       <div class="absolute top-4 left-4 flex space-x-2">
+                           <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                           <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                           <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                       </div>
+                       <div class="mt-8 space-y-2">
+                           <div class="h-2 w-10/12 bg-slate-700 rounded"></div>
+                           <div class="h-2 w-8/12 bg-slate-700 rounded"></div>
+                           <div class="h-2 w-11/12 bg-slate-700 rounded"></div>
+                           <div class="h-2 w-9/12 bg-slate-700 rounded"></div>
+                           <div class="h-2 w-10/12 bg-slate-700 rounded"></div>
+                           <div class="h-2 w-5/12 bg-slate-700 rounded"></div>
+                       </div>
+                    </div>
 
-                <div id="statusMessage"></div>
+                    <!-- Ikon Teknologi Mengambang -->
+                    <div id="icon-container" class="absolute inset-0">
+                         <!-- Ikon akan ditambahkan oleh JavaScript -->
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="history-section">
-            <h2>📚 Riwayat Timbangan Hari Ini</h2>
-            <div style="overflow-x: auto;">
-                <table class="history-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>No. Kendaraan</th>
-                            <th>Nama Petani</th>
-                            <th>Berat Bersih (kg)</th>
-                            <th>Harga/kg</th>
-                            <th>Total Bayar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyTableBody">
-                        <tr>
-                            <td colspan="7" style="text-align: center; padding: 30px; color: #666;">
-                                Belum ada data timbangan hari ini
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </main>
     </div>
 
+    <!-- Bagian Layanan Kami -->
+    <section id="layanan" class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-extrabold tracking-tight">Layanan Kami</h2>
+                <p class="mt-4 text-lg text-indigo-200">Solusi Terbaik Untuk Tugas Anda!</p>
+            </div>
+            <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Kolom layanan akan diisi oleh JavaScript di bawah -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Tim Kami -->
+    <section id="tim" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-extrabold tracking-tight">Tim Kami</h2>
+                <p class="mt-4 text-lg text-indigo-200">Para profesional yang siap membantu Anda.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                <!-- Anggota Tim 1 -->
+                <div class="text-center reveal" style="transition-delay: 100ms;">
+                    <img class="mx-auto h-40 w-40 rounded-full object-cover" src="https://placehold.co/400x400/1e293b/FFFFFF?text=A" alt="Foto profil Andi Wijaya">
+                    <h3 class="mt-6 text-xl font-semibold tracking-tight text-white">Andi Wijaya</h3>
+                    <p class="text-yellow-400">Full-Stack Developer</p>
+                </div>
+                <!-- Anggota Tim 2 -->
+                <div class="text-center reveal" style="transition-delay: 200ms;">
+                    <img class="mx-auto h-40 w-40 rounded-full object-cover" src="https://placehold.co/400x400/1e293b/FFFFFF?text=B" alt="Foto profil Bunga Lestari">
+                    <h3 class="mt-6 text-xl font-semibold tracking-tight text-white">Bunga Lestari</h3>
+                    <p class="text-yellow-400">UI/UX Designer & Grafis</p>
+                </div>
+                <!-- Anggota Tim 3 -->
+                <div class="text-center reveal" style="transition-delay: 300ms;">
+                    <img class="mx-auto h-40 w-40 rounded-full object-cover" src="https://placehold.co/400x400/1e293b/FFFFFF?text=C" alt="Foto profil Citra Prameswari">
+                    <h3 class="mt-6 text-xl font-semibold tracking-tight text-white">Citra Prameswari</h3>
+                    <p class="text-yellow-400">Penulis Akademik & Riset</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Bagian Galeri -->
+    <section id="galeri" class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-extrabold tracking-tight">Galeri Hasil Karya</h2>
+                <p class="mt-4 text-lg text-indigo-200">Beberapa proyek yang telah kami selesaikan.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Proyek 1 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-lg reveal" style="transition-delay: 100ms;">
+                    <img src="https://placehold.co/600x400/334155/FFFFFF?text=Website+Toko+Online" alt="Galeri Proyek 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="text-center text-white p-4">
+                            <h3 class="font-bold text-lg">Website Toko Online</h3>
+                            <p class="text-sm mt-1">Platform E-commerce lengkap.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyek 2 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-lg reveal" style="transition-delay: 200ms;">
+                    <img src="https://placehold.co/600x400/334155/FFFFFF?text=Desain+Logo+Branding" alt="Galeri Proyek 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="text-center text-white p-4">
+                            <h3 class="font-bold text-lg">Desain Logo & Branding</h3>
+                            <p class="text-sm mt-1">Identitas visual untuk startup.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyek 3 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-lg reveal" style="transition-delay: 300ms;">
+                    <img src="https://placehold.co/600x400/334155/FFFFFF?text=Presentasi+Powerpoint" alt="Galeri Proyek 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="text-center text-white p-4">
+                            <h3 class="font-bold text-lg">Presentasi Powerpoint</h3>
+                            <p class="text-sm mt-1">Desain slide dengan animasi Morph.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Form Pemesanan -->
+    <section id="pemesanan" class="py-20">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-extrabold tracking-tight">Form Pemesanan Jasa</h2>
+                <p class="mt-4 text-lg text-indigo-200">Isi formulir di bawah ini untuk memulai proyek Anda bersama kami.</p>
+            </div>
+            <form action="#" method="POST" class="bg-slate-900 p-8 rounded-2xl shadow-2xl space-y-6 reveal" style="transition-delay: 150ms;">
+                <div>
+                    <label for="nama" class="block text-sm font-medium text-gray-300 mb-2">Nama Lengkap</label>
+                    <input type="text" name="nama" id="nama" required class="w-full p-3 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-yellow-500 focus:border-yellow-500 transition">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Alamat Email</label>
+                    <input type="email" name="email" id="email" required class="w-full p-3 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-yellow-500 focus:border-yellow-500 transition">
+                </div>
+                <div>
+                    <label for="whatsapp" class="block text-sm font-medium text-gray-300 mb-2">Nomor WhatsApp</label>
+                    <input type="tel" name="whatsapp" id="whatsapp" required class="w-full p-3 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-yellow-500 focus:border-yellow-500 transition" placeholder="Contoh: 08123456789">
+                </div>
+                <div>
+                    <label for="pilih-layanan" class="block text-sm font-medium text-gray-300 mb-2">Pilih Layanan</label>
+                    <select id="pilih-layanan" name="pilih-layanan" class="w-full p-3 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-yellow-500 focus:border-yellow-500 transition">
+                        <option>Pilih salah satu...</option>
+                        <option>Website Dinamis</option>
+                        <option>Website Statis</option>
+                        <option>E-commerce</option>
+                        <option>Skripsi</option>
+                        <option>Jurnal</option>
+                        <option>Makalah</option>
+                        <option>Design Grafis</option>
+                        <option>Design Logo</option>
+                        <option>Design Banner/Spanduk</option>
+                        <option>Powerpoint Morph</option>
+                        <option>Tugas Kuliah / Sekolah</option>
+                        <option>Lainnya</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="detail" class="block text-sm font-medium text-gray-300 mb-2">Detail Pesanan</label>
+                    <textarea id="detail" name="detail" rows="4" class="w-full p-3 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-yellow-500 focus:border-yellow-500 transition" placeholder="Jelaskan kebutuhan proyek Anda secara singkat..."></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="w-full bg-yellow-400 text-slate-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        Kirim Pesanan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Bagian Kontak dan Footer -->
+    <footer id="kontak" class="bg-yellow-400 text-slate-900 body-font">
+        <div class="container px-5 py-12 mx-auto">
+            <div class="flex flex-wrap md:text-left text-center order-first">
+                <div class="lg:w-1/2 md:w-1/2 w-full px-4">
+                    <h2 class="font-bold text-2xl mb-3">Innovative Store</h2>
+                    <p class="mt-2 text-sm text-slate-800">HARGA SESUAI DENGAN PERMINTAAN LAYANAN CUSTOMER</p>
+                </div>
+                <div class="lg:w-1/2 md:w-1/2 w-full px-4 mt-10 md:mt-0">
+                    <h2 class="font-bold text-slate-900 tracking-widest text-lg mb-3">Hubungi Kami</h2>
+                     <div class="flex items-center justify-center md:justify-start">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        <a href="https://wa.me/6281265548034" target="_blank" class="hover:underline">+62 812-6554-8034</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-slate-900">
+            <div class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
+                <p class="text-gray-400 text-sm text-center sm:text-left">© 2025 Innovative Store —
+                    <a href="#" rel="noopener noreferrer" class="text-gray-300 ml-1" target="_blank">Dibuat dengan ❤️</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Data storage untuk sesi saat ini
-        let currentData = null;
-        let historyData = [];
-
-        // Set tanggal hari ini secara otomatis
-        document.getElementById('tanggal').valueAsDate = new Date();
-
-        // Format angka ke Rupiah
-        function formatRupiah(angka) {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(angka);
-        }
-
-        // Format angka dengan pemisah ribuan
-        function formatNumber(angka) {
-            return new Intl.NumberFormat('id-ID').format(angka);
-        }
-
-        // Hitung timbangan
-        document.getElementById('timbanganForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        document.addEventListener('DOMContentLoaded', function() {
             
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Konversi ke number
-            data.beratKotor = parseFloat(data.beratKotor);
-            data.beratKendaraan = parseFloat(data.beratKendaraan);
-            data.hargaPerKg = parseInt(data.hargaPerKg);
-            
-            // Hitung berat bersih
-            data.beratBersih = data.beratKotor - data.beratKendaraan;
-            
-            // Hitung total pembayaran
-            data.totalPembayaran = data.beratBersih * data.hargaPerKg;
-            
-            // Validasi
-            if (data.beratBersih <= 0) {
-                showStatus('Berat bersih harus lebih dari 0!', 'error');
-                return;
-            }
-            
-            // Simpan data sementara
-            currentData = data;
-            
-            // Update tampilan hasil
-            document.getElementById('beratBersih').textContent = formatNumber(data.beratBersih) + ' kg';
-            document.getElementById('displayHarga').textContent = formatRupiah(data.hargaPerKg);
-            document.getElementById('totalPembayaran').textContent = formatRupiah(data.totalPembayaran);
-            
-            // Enable tombol simpan
-            document.getElementById('simpanData').disabled = false;
-            
-            showStatus('Perhitungan berhasil! Silakan simpan data.', 'success');
-        });
-
-        // Simpan data
-        document.getElementById('simpanData').addEventListener('click', function() {
-            if (!currentData) return;
-            
-            // Tambahkan timestamp
-            currentData.timestamp = new Date().toISOString();
-            currentData.waktu = new Date().toLocaleString('id-ID');
-            
-            // Kirim ke Google Sheets terlebih dahulu
-            sendToGoogleSheets(currentData);
-            
-            // Tambahkan ke history lokal
-            historyData.unshift(currentData);
-            
-            // Update tabel riwayat
-            updateHistoryTable();
-            
-            // Reset form
-            document.getElementById('timbanganForm').reset();
-            document.getElementById('tanggal').valueAsDate = new Date();
-            
-            // Reset hasil
-            document.getElementById('beratBersih').textContent = '0 kg';
-            document.getElementById('displayHarga').textContent = 'Rp 0';
-            document.getElementById('totalPembayaran').textContent = 'Rp 0';
-            
-            // Disable tombol simpan
-            document.getElementById('simpanData').disabled = true;
-            currentData = null;
-            
-            showStatus('Data berhasil disimpan!', 'success');
-        });
-
-        // Update tabel riwayat
-        function updateHistoryTable() {
-            const tbody = document.getElementById('historyTableBody');
-            
-            if (historyData.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7" style="text-align: center; padding: 30px; color: #666;">
-                            Belum ada data timbangan hari ini
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            tbody.innerHTML = historyData.map((data, index) => `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${data.tanggal}</td>
-                    <td>${data.noKendaraan}</td>
-                    <td>${data.namaPetani}</td>
-                    <td>${formatNumber(data.beratBersih)} kg</td>
-                    <td>${formatRupiah(data.hargaPerKg)}</td>
-                    <td>${formatRupiah(data.totalPembayaran)}</td>
-                </tr>
-            `).join('');
-        }
-
-        // Tampilkan status message
-        function showStatus(message, type) {
-            const statusDiv = document.getElementById('statusMessage');
-            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
-            
-            setTimeout(() => {
-                statusDiv.innerHTML = '';
-            }, 5000);
-        }
-
-        // Fungsi untuk mengirim data ke Google Sheets (akan diimplementasi dengan Apps Script)
-        function sendToGoogleSheets(data) {
-            // URL Google Apps Script Web App
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0FDaoorlaK-BoxxH-iQtLdEWHP0Aevk5tRrknQoKxs0_knFIeE4_awdif0ZomM_CbtQ/exec';
-            
-            // Jika URL belum diset, skip pengiriman
-            if (SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbx0FDaoorlaK-BoxxH-iQtLdEWHP0Aevk5tRrknQoKxs0_knFIeE4_awdif0ZomM_CbtQ/exec') {
-                console.log('Google Apps Script URL belum diset');
-                showStatus('URL Google Apps Script belum dikonfigurasi', 'error');
-                return;
-            }
-            
-            // Tampilkan loading
-            showStatus('Mengirim data ke server...', 'success');
-            
-            // Kirim data ke Google Apps Script
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-                redirect: 'follow'
-            })
-            .then(response => {
-                console.log('Response status:', response.status);
-                return response.text();
-            })
-            .then(result => {
-                console.log('Server response:', result);
-                try {
-                    const jsonResult = JSON.parse(result);
-                    if (jsonResult.status === 'success') {
-                        showStatus('Data berhasil disimpan ke server!', 'success');
-                    } else {
-                        showStatus('Error dari server: ' + jsonResult.message, 'error');
+            // --- Logika Animasi Reveal (Fade-in saat scroll) ---
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
                     }
-                } catch (e) {
-                    // Jika response bukan JSON, mungkin masih berhasil
-                    showStatus('Data terkirim ke server', 'success');
-                }
-            })
-            .catch(error => {
-                console.error('Error mengirim data:', error);
-                showStatus('Gagal mengirim ke server: ' + error.message, 'error');
+                });
+            }, { threshold: 0.1 });
+
+            // Mengamati semua elemen dengan kelas .reveal
+            document.querySelectorAll('.reveal').forEach(elem => {
+                revealObserver.observe(elem);
             });
-        }
+            
+            // --- Logika untuk Ikon Mengambang ---
+            const iconContainer = document.getElementById('icon-container');
+            if (iconContainer) {
+                const icons = [
+                    { name: 'HTML', svg: '<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-orange-500" viewBox="0 0 24 24" fill="currentColor"><path d="M1.365 21.325l1.727-19.32h17.816l-1.727 19.32-7.182 2.001-7.184-2.001zm16.14-15.348h-10.96l.248 2.78h10.465l-.65 7.28-4.228 1.171-4.24-1.171-.295-3.3h2.793l.147 1.649 1.595.441.001-0.001 1.594-.442.172-1.93h-5.467l-.767-8.607h11.666l-.248 2.78z"/></svg>', top: '10%', left: '55%' },
+                    { name: 'CSS', svg: '<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M1.365 21.325l1.727-19.32h17.816l-1.727 19.32-7.182 2.001-7.184-2.001zm16.14-15.348h-10.96l.248 2.78h10.465l-.65 7.28-4.228 1.171-4.24-1.171-.295-3.3h2.793l.147 1.649 1.595.441.001-0.001 1.594-.442.172-1.93h-5.467l-.767-8.607h11.666l-.248 2.78z"/></svg>', top: '25%', left: '90%' },
+                    { name: 'JS', svg: '<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-yellow-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-3.034 18.257c-.98 1.229-2.522 1.673-4.049 1.164.839 1.144 2.458 1.579 3.991 1.059 1.932-.653 2.946-2.583 2.308-4.523-.623 1.921-2.54 2.947-4.475 3.197.625-.015 1.235-.138 1.83-.377.925-.369 1.536-1.125 1.536-1.125s-.152.023-.345.023c-.736 0-1.396-.403-1.729-1.011-.223-.419-.24-.877-.074-1.314.167-.435.509-.794.945-1.011.609-.308.926-.339.926-.339s-.353-.167-.781-.167c-.602 0-1.12.23-1.503.628-.386.402-.64.957-.698 1.549-.059.589.074 1.177.411 1.685.339.508.857.857 1.458 1.028-.214-.029-.427-.089-.632-.182-.925-.369-1.536-1.125-1.536-1.125s.768.513 1.618.513c.272 0 .524-.044.757-.129.571-.215 1.028-.616 1.3-1.128.272-.513.357-.992.272-1.458-.085-.467-.357-.884-.757-1.171-.399-.286-.884-.442-1.37-.442-.485 0-.913.128-1.284.356-.37.228-.67.57-.87.984-.2.413-.285.87-.228 1.313-.057-.6.086-1.2.442-1.685.357-.485.885-.785 1.47-.856.585-.072 1.156.072 1.613.385.456.314.756.77.827 1.285.043.285.043.57.014.842-.028.272-.1.528-.185.77-.285.856-1.028 1.513-1.955 1.67.628.1 1.228-.014 1.784-.3.557-.286.985-.756 1.2-1.313l.043-.114.043-.1s.314.8.043 1.542zm6.75-1.284c-.217.433-.532.78-9.45.969-.379-.379-.684-.814-.885-1.294-.201-.48-.282-.988-.236-1.49.046-.502.247-1 .575-1.428.328-.428.768-.768 1.284-.984.516-.217 1.07-.288 1.612-.21.542.078 1.049.31 1.47.659.421.35.727.8.878 1.312.152.512.141 1.055-.03 1.558z"/></svg>', top: '5%', left: '15%' },
+                    { name: 'PHP', svg: '<svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-indigo-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M13.23 10.23c.33-.21.53-.52.53-.88 0-.7-.57-1.27-1.27-1.27-.48 0-.9.28-1.12.68-.14-.42-.51-.73-.95-.73-.55 0-1 .45-1 1 0 .28.12.53.31.71-.35.19-.62.47-.78.82-.16.35-.16.73.01 1.1.17.37.49.65.87.8.21.08.43.12.65.12.28 0 .55-.06.79-.18.2-.1.38-.25.53-.43.15.18.33.33.53.43.24.12.51.18.79.18.22 0 .44-.04.65-.12.38-.15.7-.43.87-.8.17-.37.17-.75.01-1.1-.16-.35-.43-.63-.78-.82.19-.18.31-.43.31-.71 0-.55-.45-1-1-1-.44 0-.81.29-.95.73-.22-.4-.64-.68-1.12-.68-.7 0-1.27.57-1.27 1.27 0 .36.2.67.53.88.29.19.64.29 1 .29.36 0 .71-.1 1-.29zm-2.46 4.39c.27-.11.57-.16.88-.16s.61.05.88.16c.38.16.7.42.92.76.22.34.33.72.33 1.12 0 .4-.11.78-.33 1.12-.22.34-.54.6-.92.76-.27.11-.57.16-.88-.16s-.61-.05-.88-.16c-.38-.16-.7-.42-.92-.76-.22-.34-.33-.72-.33-1.12 0-.4.11-.78-.33-1.12.22-.34.54-.6.92-.76z"/></svg>', top: '15%', left: '75%' },
+                ];
+                icons.forEach((icon, i) => {
+                    const el = document.createElement('div');
+                    el.className = 'absolute floating-icon icon-shadow';
+                    el.style.top = icon.top;
+                    el.style.left = icon.left;
+                    el.style.animationDelay = `${i * 0.4}s`;
+                    el.innerHTML = icon.svg;
+                    iconContainer.appendChild(el);
+                });
+            }
+
+            // --- Logika untuk Mengisi Layanan Kami ---
+            const serviceColumns = [
+                ['Website Dinamis', 'Website Statis', 'E-commerce', 'Dll.'],
+                ['Skripsi', 'Jurnal', 'Makalah', 'Dll.'],
+                ['Design Grafis', 'Design Logo', 'Design Banner/Spanduk', 'Dll.'],
+                ['Powerpoint Morph', 'Tugas Kuliah', 'Tugas Sekolah', 'Dll.']
+            ];
+            
+            const servicesContainer = document.getElementById('services-grid');
+            if (servicesContainer) {
+                serviceColumns.forEach((columnItems, i) => {
+                    const columnDiv = document.createElement('div');
+                    columnDiv.className = 'reveal bg-slate-900 p-6 rounded-xl shadow-lg';
+                    columnDiv.style.transitionDelay = `${i * 150}ms`;
+                    const list = document.createElement('ul');
+                    list.className = 'space-y-3 text-indigo-200';
+                    let itemsHtml = columnItems.map(item => `<li class="flex items-start"><span class="text-yellow-400 mr-2 mt-1">&#10003;</span>${item}</li>`).join('');
+                    list.innerHTML = itemsHtml;
+                    columnDiv.appendChild(list);
+                    servicesContainer.appendChild(columnDiv);
+                    // Amati kartu yang baru dibuat
+                    revealObserver.observe(columnDiv);
+                });
+            }
+
+            // --- Logika untuk Menu Mobile (Hamburger) ---
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = menuButton.querySelector('svg:first-child');
+            const closeIcon = menuButton.querySelector('svg:last-child');
+            
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                hamburgerIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+            });
+
+            // Menutup menu mobile setelah link diklik
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    hamburgerIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                });
+            });
+
+        });
     </script>
+
 </body>
 </html>
